@@ -19,10 +19,9 @@ const CATEGORY_NAME = "Connect User Information";
 export async function getContactDetails(myusername) {
   try {
     const response = await axios.get(
-      `${config.API.V3}/members/${myusername}/traits` // TODO: add ?traitIds=connect_info,basic_info after upgrading to v5
+      `${config.API.V5}/members/${myusername}/traits` // TODO: add ?traitIds=connect_info,basic_info after upgrading to v5
     );
-
-    return { data: extractTraitsFromV3(response.data) };
+    return { data: response.data };
   } catch (err) {
     return { data: [] };
   }
