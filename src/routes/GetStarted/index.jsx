@@ -254,24 +254,18 @@ const GetStarted = () => {
       .then(async (result) => {
         const basicInfoTraits = getTraits(result?.data[0]);
 
-        if (
-          // v3 requires a create call (for traitId = "basic_info") if country is missing
-          (basicInfoTraits == null || isNullOrEmpty(basicInfoTraits.country)) &&
-          isGetStartedFormDataEmpty(myInterestsFlat)
-        ) {
-          if (isNullOrEmpty(basicInfoTraits.country)) {
-            const response = await getAllCountries();
-            const country = response.data?.result.content.find(
-              (country) =>
-                country.countryCode == basicInfoTraits.homeCountryCode
-            );
-            if (country != null) {
-              basicInfoTraits.country = country.country;
-            }
-          }
+        if (basicInfoTraits == null) {
+          // TODO: Check country in basic_info traits after ensuring country, firstName & lastName are saved after user signup
+          // const response = await getAllCountries();
+          // const country = response.data?.result.content.find(
+          //   (country) => country.countryCode == basicInfoTraits.homeCountryCode
+          // );
+          // if (country != null) {
+          //   basicInfoTraits.country = country.country;
+          // }
           return addMyPrimaryInterests(
             authUser.handle,
-            basicInfoTraits, // we could get here if basicInfoTraits.country == null
+            basicInfoTraits,
             myInterestsFlat
           );
         } else {
